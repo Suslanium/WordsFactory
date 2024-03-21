@@ -1,4 +1,4 @@
-package com.suslanium.wordsfactory.ui.theme
+package com.suslanium.wordsfactory.presentation.ui.theme
 
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily

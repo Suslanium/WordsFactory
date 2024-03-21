@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">WordsFactory</string>
+    <string name="intro_one_title">Learn anytime\nand anywhere</string>
+    <string name="intro_description">Quarantine is the perfect time to spend your day learning something new, from anywhere!</string>
+    <string name="intro_two_title">Find a course\nfor you</string>
+    <string name="intro_three_title">Improve your skills</string>
+    <string name="next">Next</string>
+    <string name="lets_start">Let’s Start</string>
+    <string name="skip">Skip</string>
 </resources>
