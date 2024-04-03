@@ -8,17 +8,20 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.suslanium.wordsfactory.presentation.ui.theme.ButtonMedium
 import com.suslanium.wordsfactory.presentation.ui.theme.PrimaryColor
 
 @Composable
-fun PrimaryButton(modifier: Modifier = Modifier, text: String, onClick: () -> Unit = {}) {
+fun PrimaryButton(modifier: Modifier = Modifier, text: String, onClick: () -> Unit = {}, enabled: Boolean = true) {
     Button(
         modifier = modifier
             .fillMaxWidth()
-            .height(56.dp),
+            .height(56.dp)
+            .alpha(if (enabled) 1f else 0.7f),
+        enabled = enabled,
         shape = RoundedCornerShape(16.dp),
         colors = ButtonDefaults.buttonColors(
             contentColor = Color.White,

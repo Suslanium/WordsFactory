@@ -1,4 +1,4 @@
-package com.suslanium.wordsfactory.presentation
+package com.suslanium.wordsfactory.presentation.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -7,7 +7,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.suslanium.wordsfactory.presentation.ui.screen.intro.IntroScreen
+import androidx.navigation.compose.rememberNavController
+import com.suslanium.wordsfactory.presentation.ui.navigation.WordsFactoryNavigation
 import com.suslanium.wordsfactory.presentation.ui.theme.WordsFactoryTheme
 
 class MainActivity : ComponentActivity() {
@@ -15,12 +16,13 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             WordsFactoryTheme {
+                val navController = rememberNavController()
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    IntroScreen()
+                    WordsFactoryNavigation(navController = navController)
                 }
             }
         }

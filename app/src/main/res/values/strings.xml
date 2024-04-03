@@ -7,4 +7,12 @@
     <string name="next">Next</string>
     <string name="lets_start">Let’s Start</string>
     <string name="skip">Skip</string>
+    <string name="sign_up">Sign up</string>
+    <string name="create_your_account">Create your account</string>
+    <string name="name">Name</string>
+    <string name="email">E-mail</string>
+    <string name="password">Password</string>
+    <string name="sign_in">Sign in</string>
+    <string name="sign_in_desc">Log into an existing account</string>
+    <string name="already_have_an_account">Already have an account?</string>
 </resources>
