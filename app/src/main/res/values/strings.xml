@@ -23,4 +23,6 @@
     <string name="dictionary">Dictionary</string>
     <string name="training">Training</string>
     <string name="video">Video</string>
+    <string name="no_word">No word</string>
+    <string name="no_word_hint">Input something to find it in dictionary</string>
 </resources>

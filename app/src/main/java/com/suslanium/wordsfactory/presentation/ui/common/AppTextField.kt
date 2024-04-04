@@ -28,7 +28,7 @@ import com.suslanium.wordsfactory.presentation.ui.theme.TextFieldBorder
 fun AppTextField(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
-    placeHolder: String,
+    placeHolder: String? = null,
     value: String,
     onValueChange: (String) -> Unit,
     trailingIcon: (@Composable () -> Unit)? = null,
@@ -78,8 +78,12 @@ fun AppTextField(
             isError = isError,
             trailingIcon = trailingIcon,
             contentPadding = PaddingValues(all = PaddingMedium),
-            placeholder = {
-                Text(text = placeHolder, style = ParagraphMedium, color = DarkGray)
+            placeholder = if (placeHolder != null) {
+                {
+                    Text(text = placeHolder, style = ParagraphMedium, color = DarkGray)
+                }
+            } else {
+                null
             },
             container = {
                 OutlinedTextFieldDefaults.ContainerBox(
