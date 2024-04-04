@@ -9,4 +9,6 @@ interface AuthRepository {
 
     suspend fun login(loginRequest: LoginRequest)
 
+    suspend fun checkUserLoggedIn(): Boolean
+
 }

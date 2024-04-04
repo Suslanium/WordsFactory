@@ -5,6 +5,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.auth
+import com.google.firebase.auth.userProfileChangeRequest
 import com.suslanium.wordsfactory.domain.entity.auth.LoginRequest
 import com.suslanium.wordsfactory.domain.entity.auth.RegisterRequest
 import com.suslanium.wordsfactory.domain.entity.auth.exception.LoginCredentialsException
@@ -20,6 +21,10 @@ class AuthRepositoryImpl : AuthRepository {
         try {
             auth.createUserWithEmailAndPassword(registerRequest.email, registerRequest.password)
                 .await()
+
+            auth.currentUser?.updateProfile(userProfileChangeRequest {
+                displayName = registerRequest.name
+            })?.await()
         } catch (e: Exception) {
             when (e) {
                 is FirebaseAuthUserCollisionException -> {
@@ -49,5 +54,7 @@ class AuthRepositoryImpl : AuthRepository {
             }
         }
     }
+
+    override suspend fun checkUserLoggedIn(): Boolean = auth.currentUser != null
 
 }
