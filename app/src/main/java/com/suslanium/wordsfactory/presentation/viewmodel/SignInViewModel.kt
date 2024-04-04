@@ -6,30 +6,28 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.suslanium.wordsfactory.R
-import com.suslanium.wordsfactory.domain.entity.auth.RegisterRequest
-import com.suslanium.wordsfactory.domain.entity.auth.exception.RegistrationCollisionException
-import com.suslanium.wordsfactory.domain.usecase.RegisterUseCase
+import com.suslanium.wordsfactory.domain.entity.auth.LoginRequest
+import com.suslanium.wordsfactory.domain.entity.auth.exception.LoginCredentialsException
+import com.suslanium.wordsfactory.domain.usecase.LoginUseCase
 import com.suslanium.wordsfactory.domain.usecase.ValidateEmailUseCase
-import com.suslanium.wordsfactory.domain.usecase.ValidateNameUseCase
 import com.suslanium.wordsfactory.domain.usecase.ValidatePasswordUseCase
 import com.suslanium.wordsfactory.presentation.state.AuthEvent
 import com.suslanium.wordsfactory.presentation.state.AuthState
-import com.suslanium.wordsfactory.presentation.state.RegistrationData
+import com.suslanium.wordsfactory.presentation.state.LoginData
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 
-class SignUpViewModel(
-    private val registerUseCase: RegisterUseCase,
-    private val validateNameUseCase: ValidateNameUseCase,
+class SignInViewModel(
+    private val loginUseCase: LoginUseCase,
     private val validateEmailUseCase: ValidateEmailUseCase,
     private val validatePasswordUseCase: ValidatePasswordUseCase
 ) : ViewModel() {
 
-    private val _formData = mutableStateOf(RegistrationData())
-    val formData: State<RegistrationData>
+    private val _formData = mutableStateOf(LoginData())
+    val formData: State<LoginData>
         get() = _formData
 
     private val _screenState = mutableStateOf<AuthState>(AuthState.Content)
@@ -39,21 +37,19 @@ class SignUpViewModel(
     private val _authEvents = MutableSharedFlow<AuthEvent>(replay = 1)
     val authEvents = _authEvents.asSharedFlow()
 
-    val signUpFormIsCorrectlyFilled: State<Boolean>
+    val signInFormIsCorrectlyFilled: State<Boolean>
         get() = derivedStateOf {
             _formData.value.emailValidationErrorType == null
-                    && _formData.value.nameValidationErrorType == null
                     && _formData.value.passwordValidationErrorType == null
-                    && _formData.value.name.isNotBlank()
                     && _formData.value.password.isNotBlank()
                     && _formData.value.email.isNotBlank()
         }
 
     private val registrationExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         when (throwable) {
-            is RegistrationCollisionException -> {
+            is LoginCredentialsException -> {
                 _formData.value =
-                    _formData.value.copy(errorMessageId = R.string.sign_up_collision_error_message)
+                    _formData.value.copy(errorMessageId = R.string.sign_in_credentials_error_message)
                 _screenState.value = AuthState.Content
             }
 
@@ -63,12 +59,6 @@ class SignUpViewModel(
                 _screenState.value = AuthState.Content
             }
         }
-    }
-
-    fun setName(name: String) {
-        _formData.value = _formData.value.copy(
-            name = name, nameValidationErrorType = validateNameUseCase(name)
-        )
     }
 
     fun setEmail(email: String) {
@@ -95,13 +85,12 @@ class SignUpViewModel(
         )
     }
 
-    fun register() {
-        if (!signUpFormIsCorrectlyFilled.value) return
+    fun login() {
+        if (!signInFormIsCorrectlyFilled.value) return
         _screenState.value = AuthState.Loading
         viewModelScope.launch(Dispatchers.IO + registrationExceptionHandler) {
-            registerUseCase(
-                RegisterRequest(
-                    name = _formData.value.name,
+            loginUseCase(
+                LoginRequest(
                     email = _formData.value.email,
                     password = _formData.value.password
                 )

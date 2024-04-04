@@ -77,12 +77,13 @@ fun SignUpScreen(onNavigateToSignIn: () -> Unit, onNavigateToNext: () -> Unit = 
         }
     }
 
-    formData.errorMessageId?.let {  errorMessageId ->
+    formData.errorMessageId?.let { errorMessageId ->
         TextAlertDialog(
             title = stringResource(id = R.string.error_title),
             message = stringResource(id = errorMessageId),
             acceptButtonText = stringResource(id = R.string.ok),
-            onAccept = viewModel::consumeErrorMessage)
+            onAccept = viewModel::consumeErrorMessage
+        )
     }
 
     Column(

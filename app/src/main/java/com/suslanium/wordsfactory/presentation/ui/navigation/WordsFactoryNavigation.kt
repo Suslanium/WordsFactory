@@ -33,7 +33,7 @@ fun WordsFactoryNavigation(navController: NavHostController) {
         }
 
         composable(WordsFactoryDestinations.SIGN_IN) {
-            SignInScreen()
+            SignInScreen(onNavigateToNext = {})
         }
     }
 }
