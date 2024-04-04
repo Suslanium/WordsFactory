@@ -75,7 +75,7 @@ fun SignInScreen() {
             trailingIcon = {
                 IconButton(modifier = Modifier.size(24.dp), onClick = { /*TODO*/ }) {
                     Icon(
-                        imageVector = ImageVector.vectorResource(id = R.drawable.eye_icon),
+                        imageVector = ImageVector.vectorResource(id = R.drawable.eye_icon_hidden),
                         contentDescription = null,
                         tint = Dark
                     )

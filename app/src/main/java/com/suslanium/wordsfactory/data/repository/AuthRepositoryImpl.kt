@@ -2,36 +2,52 @@ package com.suslanium.wordsfactory.data.repository
 
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.auth
 import com.suslanium.wordsfactory.domain.entity.auth.LoginRequest
 import com.suslanium.wordsfactory.domain.entity.auth.RegisterRequest
+import com.suslanium.wordsfactory.domain.entity.auth.exception.LoginCredentialsException
+import com.suslanium.wordsfactory.domain.entity.auth.exception.RegistrationCollisionException
 import com.suslanium.wordsfactory.domain.repository.AuthRepository
 import kotlinx.coroutines.tasks.await
 
-class AuthRepositoryImpl() : AuthRepository {
+class AuthRepositoryImpl : AuthRepository {
 
     private var auth: FirebaseAuth = Firebase.auth
 
     override suspend fun register(registerRequest: RegisterRequest) {
-        auth.createUserWithEmailAndPassword(registerRequest.email, registerRequest.password)
-            .addOnCompleteListener { result ->
-                if (!result.isSuccessful) {
-                    result.exception?.let {
-                        throw it
-                    }
+        try {
+            auth.createUserWithEmailAndPassword(registerRequest.email, registerRequest.password)
+                .await()
+        } catch (e: Exception) {
+            when (e) {
+                is FirebaseAuthUserCollisionException -> {
+                    throw RegistrationCollisionException()
                 }
-            }.await()
+
+                else -> {
+                    throw e
+                }
+            }
+        }
+
     }
 
     override suspend fun login(loginRequest: LoginRequest) {
-        auth.signInWithEmailAndPassword(loginRequest.email, loginRequest.password)
-            .addOnCompleteListener { result ->
-                if (!result.isSuccessful) {
-                    result.exception?.let {
-                        throw it
-                    }
+        try {
+            auth.signInWithEmailAndPassword(loginRequest.email, loginRequest.password).await()
+        } catch (e: Exception) {
+            when (e) {
+                is FirebaseAuthInvalidCredentialsException -> {
+                    throw LoginCredentialsException()
                 }
-            }.await()
+
+                else -> {
+                    throw e
+                }
+            }
+        }
     }
 
 }

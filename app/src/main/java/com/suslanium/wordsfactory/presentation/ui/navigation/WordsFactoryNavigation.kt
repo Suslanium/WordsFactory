@@ -28,7 +28,8 @@ fun WordsFactoryNavigation(navController: NavHostController) {
         }
 
         composable(WordsFactoryDestinations.SIGN_UP) {
-            SignUpScreen(onNavigateToSignIn = { navController.navigate(WordsFactoryDestinations.SIGN_IN) })
+            SignUpScreen(onNavigateToSignIn = { navController.navigate(WordsFactoryDestinations.SIGN_IN) },
+                onNavigateToNext = {})
         }
 
         composable(WordsFactoryDestinations.SIGN_IN) {

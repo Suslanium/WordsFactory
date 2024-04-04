@@ -6,7 +6,6 @@ val PrimaryColor = Color(0xFFE3562A)
 val SecondaryColor = Color(0xFF65AAEA)
 val Success = Color(0xFF5BA092)
 val Error = Color(0xFFEF4949)
-val ErrorContainer = Color(0xFFE98D8D)
 val Warning = Color(0xFFF2A03F)
 
 val DarkGray = Color(0xFF78746D)

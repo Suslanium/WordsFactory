@@ -19,7 +19,6 @@ import androidx.compose.ui.unit.dp
 import com.suslanium.wordsfactory.presentation.ui.theme.Dark
 import com.suslanium.wordsfactory.presentation.ui.theme.DarkGray
 import com.suslanium.wordsfactory.presentation.ui.theme.Error
-import com.suslanium.wordsfactory.presentation.ui.theme.ErrorContainer
 import com.suslanium.wordsfactory.presentation.ui.theme.PaddingMedium
 import com.suslanium.wordsfactory.presentation.ui.theme.ParagraphMedium
 import com.suslanium.wordsfactory.presentation.ui.theme.TextFieldBorder
@@ -48,7 +47,7 @@ fun AppTextField(
         focusedTrailingIconColor = Dark,
         unfocusedTrailingIconColor = Dark,
         disabledTrailingIconColor = Dark,
-        errorContainerColor = ErrorContainer,
+        errorContainerColor = Color.Transparent,
         errorTrailingIconColor = Error,
         errorBorderColor = Error,
         errorCursorColor = Error,

@@ -15,4 +15,9 @@
     <string name="sign_in">Sign in</string>
     <string name="sign_in_desc">Log into an existing account</string>
     <string name="already_have_an_account">Already have an account?</string>
+    <string name="sign_up_collision_error_message">Account with the same e-mail already exists</string>
+    <string name="sign_in_credentials_error_message">Invalid e-mail or password</string>
+    <string name="general_error_message">Something went wrong…</string>
+    <string name="error_title">Error</string>
+    <string name="ok">OK</string>
 </resources>
