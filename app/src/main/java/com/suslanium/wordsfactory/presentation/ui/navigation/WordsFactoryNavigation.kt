@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.suslanium.wordsfactory.presentation.ui.screen.bottomnavroot.BottomNavigationRoot
 import com.suslanium.wordsfactory.presentation.ui.screen.auth.signin.SignInScreen
 import com.suslanium.wordsfactory.presentation.ui.screen.auth.signup.SignUpScreen
 import com.suslanium.wordsfactory.presentation.ui.screen.intro.IntroScreen
@@ -68,7 +69,7 @@ fun WordsFactoryNavigation(navController: NavHostController) {
         }
 
         composable(WordsFactoryDestinations.BOTTOM_NAVIGATION) {
-            BottomNavigationRoot()
+            BottomNavigationRoot(rootNavController = navController)
         }
     }
 }

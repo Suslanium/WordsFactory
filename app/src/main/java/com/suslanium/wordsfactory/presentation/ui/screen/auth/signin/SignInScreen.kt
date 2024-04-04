@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
@@ -67,6 +68,7 @@ fun SignInScreen(onNavigateToNext: () -> Unit = {}) {
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .systemBarsPadding()
             .padding(horizontal = PaddingMedium)
             .verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.Center
     ) {

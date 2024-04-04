@@ -20,4 +20,7 @@
     <string name="general_error_message">Something went wrong…</string>
     <string name="error_title">Error</string>
     <string name="ok">OK</string>
+    <string name="dictionary">Dictionary</string>
+    <string name="training">Training</string>
+    <string name="video">Video</string>
 </resources>

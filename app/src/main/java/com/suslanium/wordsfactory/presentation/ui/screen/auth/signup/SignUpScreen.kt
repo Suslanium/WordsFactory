@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.verticalScroll
@@ -89,6 +90,7 @@ fun SignUpScreen(onNavigateToSignIn: () -> Unit, onNavigateToNext: () -> Unit = 
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .systemBarsPadding()
             .padding(horizontal = PaddingMedium)
             .verticalScroll(rememberScrollState())
     ) {

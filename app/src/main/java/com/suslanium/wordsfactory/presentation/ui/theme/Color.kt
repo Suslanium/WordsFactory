@@ -9,6 +9,7 @@ val Error = Color(0xFFEF4949)
 val Warning = Color(0xFFF2A03F)
 
 val DarkGray = Color(0xFF78746D)
+val Gray = Color(0xFFBEBAB3)
 val Dark = Color(0xFF3C3A36)
 val TextFieldBorder = Color(0xFFBEBAB3)
 
