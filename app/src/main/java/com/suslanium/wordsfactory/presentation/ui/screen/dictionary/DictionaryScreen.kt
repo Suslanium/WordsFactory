@@ -1,52 +1,44 @@
 package com.suslanium.wordsfactory.presentation.ui.screen.dictionary
 
+import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import com.suslanium.wordsfactory.R
-import com.suslanium.wordsfactory.domain.entity.dictionary.Definition
-import com.suslanium.wordsfactory.domain.entity.dictionary.Meaning
-import com.suslanium.wordsfactory.domain.entity.dictionary.WordEtymology
+import com.suslanium.wordsfactory.presentation.state.DictionaryState
 import com.suslanium.wordsfactory.presentation.ui.common.AppTextField
+import com.suslanium.wordsfactory.presentation.ui.screen.dictionary.components.DictionaryErrorPlaceHolder
+import com.suslanium.wordsfactory.presentation.ui.screen.dictionary.components.DictionaryNoWordPlaceHolder
+import com.suslanium.wordsfactory.presentation.ui.screen.dictionary.components.DictionaryPlaceHolder
 import com.suslanium.wordsfactory.presentation.ui.screen.dictionary.components.DictionaryWord
+import com.suslanium.wordsfactory.presentation.ui.screen.dictionary.components.LoadingPlaceHolder
 import com.suslanium.wordsfactory.presentation.ui.theme.Dark
 import com.suslanium.wordsfactory.presentation.ui.theme.PaddingMedium
-
-private val mockWord = listOf(
-    WordEtymology(
-        word = "Cooking", phonetic = "[ˈkʊkɪŋ]", audioUrl = "", meanings = listOf(
-            Meaning(
-                partOfSpeech = "Noun", definitions = listOf(
-                    Definition(
-                        definition = "The practice or skill of preparing food by combining, mixing, and heating ingredients.",
-                        example = "he developed an interest in cooking."
-                    ),
-                    Definition(
-                        definition = "The practice or skill of preparing food by combining, mixing, and heating ingredients.",
-                        example = "he developed an interest in cooking."
-                    ),
-                )
-            )
-        )
-    )
-)
+import com.suslanium.wordsfactory.presentation.viewmodel.DictionaryViewModel
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun DictionaryScreen() {
+    val viewModel: DictionaryViewModel = koinViewModel()
+    val query by remember { viewModel.currentQuery }
+    val state by remember { viewModel.screenState }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(start = PaddingMedium, end = PaddingMedium, top = 24.dp)
     ) {
-        AppTextField(enabled = true, value = "", onValueChange = { }, trailingIcon = {
-            IconButton(onClick = { /*TODO*/ }) {
+        AppTextField(value = query, onValueChange = viewModel::setQuery, trailingIcon = {
+            IconButton(onClick = viewModel::search) {
                 Icon(
                     imageVector = ImageVector.vectorResource(R.drawable.search_icon),
                     contentDescription = null,
@@ -55,6 +47,14 @@ fun DictionaryScreen() {
             }
         })
 
-        DictionaryWord(wordEtymologies = mockWord)
+        Crossfade(targetState = state, label = "") { dictionaryState ->
+            when(dictionaryState) {
+                is DictionaryState.Content -> DictionaryWord(wordEtymologies = dictionaryState.wordInfo.etymologies)
+                DictionaryState.Error -> DictionaryErrorPlaceHolder()
+                DictionaryState.Initial -> DictionaryPlaceHolder()
+                DictionaryState.Loading -> LoadingPlaceHolder()
+                DictionaryState.WordNotFound -> DictionaryNoWordPlaceHolder()
+            }
+        }
     }
 }

@@ -28,4 +28,8 @@
     <string name="part_of_speech">Part of Speech:</string>
     <string name="meanings">Meanings:</string>
     <string name="example">Example: </string>
+    <string name="word_not_found">No Definitions Found</string>
+    <string name="word_not_found_desc">Sorry, we couldn\'t find definitions for the word you were looking for</string>
+    <string name="dict_error">Unable to fetch data</string>
+    <string name="dict_error_desc">Check your internet connection or try again later</string>
 </resources>

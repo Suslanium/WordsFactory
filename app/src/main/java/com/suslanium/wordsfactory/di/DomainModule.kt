@@ -1,9 +1,13 @@
 package com.suslanium.wordsfactory.di
 
 import android.util.Patterns
+import com.suslanium.wordsfactory.data.api.WordApi
 import com.suslanium.wordsfactory.data.repository.AuthRepositoryImpl
+import com.suslanium.wordsfactory.data.repository.WordRepositoryImpl
 import com.suslanium.wordsfactory.domain.repository.AuthRepository
+import com.suslanium.wordsfactory.domain.repository.WordRepository
 import com.suslanium.wordsfactory.domain.usecase.CheckUserLoggedInUseCase
+import com.suslanium.wordsfactory.domain.usecase.GetWordInfoUseCase
 import com.suslanium.wordsfactory.domain.usecase.LoginUseCase
 import com.suslanium.wordsfactory.domain.usecase.RegisterUseCase
 import com.suslanium.wordsfactory.domain.usecase.ValidateEmailUseCase
@@ -13,9 +17,15 @@ import org.koin.dsl.module
 
 private fun provideAuthRepository(): AuthRepository = AuthRepositoryImpl()
 
+private fun provideWordRepository(wordApi: WordApi): WordRepository = WordRepositoryImpl(wordApi)
+
 fun provideDomainModule() = module {
     single {
         provideAuthRepository()
+    }
+
+    single {
+        provideWordRepository(get())
     }
 
     factory {
@@ -44,5 +54,9 @@ fun provideDomainModule() = module {
 
     factory {
         CheckUserLoggedInUseCase(get())
+    }
+
+    factory {
+        GetWordInfoUseCase(get())
     }
 }

@@ -1,5 +1,6 @@
 package com.suslanium.wordsfactory.di
 
+import com.suslanium.wordsfactory.presentation.viewmodel.DictionaryViewModel
 import com.suslanium.wordsfactory.presentation.viewmodel.SignInViewModel
 import com.suslanium.wordsfactory.presentation.viewmodel.SignUpViewModel
 import com.suslanium.wordsfactory.presentation.viewmodel.SplashViewModel
@@ -17,5 +18,9 @@ fun providePresentationModule() = module {
 
     viewModel {
         SplashViewModel(get())
+    }
+
+    viewModel {
+        DictionaryViewModel(get())
     }
 }

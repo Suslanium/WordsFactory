@@ -52,7 +52,7 @@ fun DictionaryWord(wordEtymologies: List<WordEtymology>) {
 
             if (index != wordEtymologies.lastIndex) {
                 item {
-                    HorizontalDivider(color = Gray)
+                    HorizontalDivider(modifier = Modifier.padding(top = 8.dp, bottom = 5.dp), color = Gray)
                 }
             }
         }

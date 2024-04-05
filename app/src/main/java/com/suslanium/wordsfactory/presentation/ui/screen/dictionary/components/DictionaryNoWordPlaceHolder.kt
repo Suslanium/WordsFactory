@@ -21,7 +21,7 @@ import com.suslanium.wordsfactory.presentation.ui.theme.PaddingSmall
 import com.suslanium.wordsfactory.presentation.ui.theme.ParagraphMedium
 
 @Composable
-fun DictionaryPlaceHolder() {
+fun DictionaryNoWordPlaceHolder() {
     Column {
         Spacer(modifier = Modifier.weight(1f))
 
@@ -29,13 +29,13 @@ fun DictionaryPlaceHolder() {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(253.dp),
-            painter = painterResource(id = R.drawable.empty_dictionary_placeholder),
+            painter = painterResource(id = R.drawable.splash_image),
             contentDescription = null
         )
         Spacer(modifier = Modifier.height(PaddingLarge))
         Text(
             modifier = Modifier.fillMaxWidth(),
-            text = stringResource(id = R.string.no_word),
+            text = stringResource(id = R.string.word_not_found),
             style = HeadingH4,
             color = Dark,
             textAlign = TextAlign.Center
@@ -43,7 +43,7 @@ fun DictionaryPlaceHolder() {
         Spacer(modifier = Modifier.height(PaddingSmall))
         Text(
             modifier = Modifier.fillMaxWidth(),
-            text = stringResource(id = R.string.no_word_hint),
+            text = stringResource(id = R.string.word_not_found_desc),
             style = ParagraphMedium,
             color = DarkGray,
             textAlign = TextAlign.Center
