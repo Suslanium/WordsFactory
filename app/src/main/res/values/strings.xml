@@ -25,4 +25,7 @@
     <string name="video">Video</string>
     <string name="no_word">No word</string>
     <string name="no_word_hint">Input something to find it in dictionary</string>
+    <string name="part_of_speech">Part of Speech:</string>
+    <string name="meanings">Meanings:</string>
+    <string name="example">Example: </string>
 </resources>
