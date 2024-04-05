@@ -11,6 +11,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import com.suslanium.wordsfactory.R
@@ -32,13 +33,17 @@ fun DictionaryScreen() {
     val query by remember { viewModel.currentQuery }
     val state by remember { viewModel.screenState }
 
+    val focusManager = LocalFocusManager.current
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(start = PaddingMedium, end = PaddingMedium, top = 24.dp)
     ) {
         AppTextField(value = query, onValueChange = viewModel::setQuery, trailingIcon = {
-            IconButton(onClick = viewModel::search) {
+            IconButton(onClick = {
+                viewModel.search()
+                focusManager.clearFocus()
+            }) {
                 Icon(
                     imageVector = ImageVector.vectorResource(R.drawable.search_icon),
                     contentDescription = null,

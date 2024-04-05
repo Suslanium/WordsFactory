@@ -22,6 +22,7 @@ import com.suslanium.wordsfactory.presentation.ui.theme.PaddingMedium
 import com.suslanium.wordsfactory.presentation.ui.theme.PaddingSmall
 import com.suslanium.wordsfactory.presentation.ui.theme.ParagraphMedium
 import com.suslanium.wordsfactory.presentation.ui.theme.PrimaryColor
+import com.suslanium.wordsfactory.utils.AudioPlayer
 
 fun LazyListScope.etymologyHeader(wordEtymology: WordEtymology) {
     item {
@@ -40,16 +41,18 @@ fun LazyListScope.etymologyHeader(wordEtymology: WordEtymology) {
                 )
             }
             wordEtymology.audioUrl?.let { audioUrl ->
-                Spacer(modifier = Modifier.width(PaddingMedium))
-                IconButton(modifier = Modifier
-                    .padding(bottom = 2.dp)
-                    .size(26.dp),
-                    onClick = { /*TODO*/ }) {
-                    Icon(
-                        imageVector = ImageVector.vectorResource(R.drawable.sound_icon),
-                        contentDescription = null,
-                        tint = PrimaryColor
-                    )
+                if (audioUrl.isNotBlank()) {
+                    Spacer(modifier = Modifier.width(PaddingMedium))
+                    IconButton(modifier = Modifier
+                        .padding(bottom = 2.dp)
+                        .size(26.dp),
+                        onClick = { AudioPlayer.playFile(audioUrl) }) {
+                        Icon(
+                            imageVector = ImageVector.vectorResource(R.drawable.sound_icon),
+                            contentDescription = null,
+                            tint = PrimaryColor
+                        )
+                    }
                 }
             }
         }
