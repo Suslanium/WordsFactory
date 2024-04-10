@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -23,9 +24,12 @@ import com.suslanium.wordsfactory.presentation.ui.theme.PaddingSmall
 import com.suslanium.wordsfactory.presentation.ui.theme.ParagraphMedium
 import com.suslanium.wordsfactory.presentation.ui.theme.PrimaryColor
 import com.suslanium.wordsfactory.utils.AudioPlayer
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 fun LazyListScope.etymologyHeader(wordEtymology: WordEtymology) {
     item {
+        val scope = rememberCoroutineScope()
         Row(
             modifier = Modifier.padding(vertical = PaddingSmall),
             verticalAlignment = Alignment.Bottom
@@ -46,7 +50,7 @@ fun LazyListScope.etymologyHeader(wordEtymology: WordEtymology) {
                     IconButton(modifier = Modifier
                         .padding(bottom = 2.dp)
                         .size(26.dp),
-                        onClick = { AudioPlayer.playFile(audioUrl) }) {
+                        onClick = { scope.launch(Dispatchers.IO) { AudioPlayer.playFile(audioUrl) } }) {
                         Icon(
                             imageVector = ImageVector.vectorResource(R.drawable.sound_icon),
                             contentDescription = null,

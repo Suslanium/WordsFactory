@@ -1,6 +1,6 @@
 package com.suslanium.wordsfactory.presentation.state
 
-import com.suslanium.wordsfactory.domain.entity.dictionary.WordInfo
+import com.suslanium.wordsfactory.domain.entity.dictionary.WordEtymology
 
 sealed interface DictionaryState {
 
@@ -12,6 +12,6 @@ sealed interface DictionaryState {
 
     data object Error : DictionaryState
 
-    data class Content(val wordInfo: WordInfo) : DictionaryState
+    data class Content(val wordEtymologies: List<WordEtymology>) : DictionaryState
 
 }

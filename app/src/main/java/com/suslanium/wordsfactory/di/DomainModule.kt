@@ -6,10 +6,12 @@ import com.suslanium.wordsfactory.data.repository.AuthRepositoryImpl
 import com.suslanium.wordsfactory.data.repository.WordRepositoryImpl
 import com.suslanium.wordsfactory.domain.repository.AuthRepository
 import com.suslanium.wordsfactory.domain.repository.WordRepository
+import com.suslanium.wordsfactory.domain.usecase.AddWordToDictionaryUseCase
 import com.suslanium.wordsfactory.domain.usecase.CheckUserLoggedInUseCase
 import com.suslanium.wordsfactory.domain.usecase.GetWordInfoUseCase
 import com.suslanium.wordsfactory.domain.usecase.LoginUseCase
 import com.suslanium.wordsfactory.domain.usecase.RegisterUseCase
+import com.suslanium.wordsfactory.domain.usecase.RemoveWordFromDictionaryUseCase
 import com.suslanium.wordsfactory.domain.usecase.ValidateEmailUseCase
 import com.suslanium.wordsfactory.domain.usecase.ValidateNameUseCase
 import com.suslanium.wordsfactory.domain.usecase.ValidatePasswordUseCase
@@ -58,5 +60,13 @@ fun provideDomainModule() = module {
 
     factory {
         GetWordInfoUseCase(get())
+    }
+
+    factory {
+        AddWordToDictionaryUseCase(get())
+    }
+
+    factory {
+        RemoveWordFromDictionaryUseCase(get())
     }
 }

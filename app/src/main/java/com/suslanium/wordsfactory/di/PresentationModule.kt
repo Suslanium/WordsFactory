@@ -21,6 +21,6 @@ fun providePresentationModule() = module {
     }
 
     viewModel {
-        DictionaryViewModel(get())
+        DictionaryViewModel(get(), get(), get())
     }
 }

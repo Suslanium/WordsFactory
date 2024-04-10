@@ -1,6 +1,8 @@
 package com.suslanium.wordsfactory.presentation.ui.screen.dictionary.components
 
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.HorizontalDivider
@@ -17,6 +19,7 @@ import com.suslanium.wordsfactory.presentation.ui.screen.dictionary.components.w
 import com.suslanium.wordsfactory.presentation.ui.screen.dictionary.components.word.meaningPartOfSpeech
 import com.suslanium.wordsfactory.presentation.ui.theme.Gray
 import com.suslanium.wordsfactory.presentation.ui.theme.HeadingH5
+import com.suslanium.wordsfactory.presentation.ui.theme.PaddingMedium
 import com.suslanium.wordsfactory.presentation.ui.theme.PaddingSmall
 
 @Composable
@@ -52,9 +55,15 @@ fun DictionaryWord(wordEtymologies: List<WordEtymology>) {
 
             if (index != wordEtymologies.lastIndex) {
                 item {
-                    HorizontalDivider(modifier = Modifier.padding(top = 8.dp, bottom = 5.dp), color = Gray)
+                    HorizontalDivider(
+                        modifier = Modifier.padding(top = 8.dp, bottom = 5.dp), color = Gray
+                    )
                 }
             }
         }
+        item {
+            Spacer(modifier = Modifier.height(PaddingMedium + 56.dp))
+        }
     }
+
 }
