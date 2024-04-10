@@ -1,6 +1,7 @@
 package com.suslanium.wordsfactory
 
 import android.app.Application
+import com.suslanium.wordsfactory.di.provideDataModule
 import com.suslanium.wordsfactory.di.provideDomainModule
 import com.suslanium.wordsfactory.di.provideNetworkModule
 import com.suslanium.wordsfactory.di.providePresentationModule
@@ -14,6 +15,7 @@ class WordsFactoryApplication : Application() {
         startKoin {
             androidContext(this@WordsFactoryApplication)
             modules(
+                provideDataModule(),
                 provideNetworkModule(),
                 provideDomainModule(),
                 providePresentationModule(),

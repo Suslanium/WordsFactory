@@ -1,6 +1,6 @@
-package com.suslanium.wordsfactory.data.converter
+package com.suslanium.wordsfactory.data.network.converter
 
-import com.suslanium.wordsfactory.data.model.WordEtymologyModel
+import com.suslanium.wordsfactory.data.network.model.WordEtymologyModel
 import com.suslanium.wordsfactory.domain.entity.dictionary.WordEtymology
 import com.suslanium.wordsfactory.domain.entity.dictionary.WordInfo
 import java.util.Locale

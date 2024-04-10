@@ -1,4 +1,4 @@
-package com.suslanium.wordsfactory.data.model
+package com.suslanium.wordsfactory.data.network.model
 
 import com.suslanium.wordsfactory.domain.entity.dictionary.Meaning
 

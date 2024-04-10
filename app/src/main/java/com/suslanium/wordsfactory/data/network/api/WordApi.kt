@@ -1,7 +1,7 @@
-package com.suslanium.wordsfactory.data.api
+package com.suslanium.wordsfactory.data.network.api
 
 import com.suslanium.wordsfactory.data.Constants
-import com.suslanium.wordsfactory.data.model.WordEtymologyModel
+import com.suslanium.wordsfactory.data.network.model.WordEtymologyModel
 import retrofit2.http.GET
 import retrofit2.http.Path
 

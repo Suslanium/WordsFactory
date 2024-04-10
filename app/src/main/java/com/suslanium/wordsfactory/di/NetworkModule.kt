@@ -3,7 +3,7 @@ package com.suslanium.wordsfactory.di
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.suslanium.wordsfactory.data.Constants
-import com.suslanium.wordsfactory.data.api.WordApi
+import com.suslanium.wordsfactory.data.network.api.WordApi
 import okhttp3.OkHttpClient
 import org.koin.dsl.module
 import retrofit2.Retrofit

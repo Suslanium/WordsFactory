@@ -1,4 +1,4 @@
-package com.suslanium.wordsfactory.data.model
+package com.suslanium.wordsfactory.data.network.model
 
 data class PhoneticModel(
     val text: String?,
