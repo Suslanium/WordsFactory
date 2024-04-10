@@ -4,7 +4,6 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.suslanium.wordsfactory.domain.entity.dictionary.WordNotFoundException
 import com.suslanium.wordsfactory.domain.usecase.AddWordToDictionaryUseCase
 import com.suslanium.wordsfactory.domain.usecase.GetWordInfoUseCase
 import com.suslanium.wordsfactory.domain.usecase.RemoveWordFromDictionaryUseCase
@@ -48,13 +47,16 @@ class DictionaryViewModel(
         searchEventFlow.map { _currentQuery.value }.filter { it.isNotBlank() }.mapLatest {
             _screenState.value = DictionaryState.Loading
             val word = getWordInfoUseCase(it)
+
+            if (word == null) {
+                _screenState.value = DictionaryState.WordNotFound
+                return@mapLatest
+            }
+
             _screenState.value = DictionaryState.Content(word.etymologies)
             _addedToDictionary.value = word.isAdded
-        }.retryWhen { exception, _ ->
-            when (exception) {
-                is WordNotFoundException -> _screenState.value = DictionaryState.WordNotFound
-                else -> _screenState.value = DictionaryState.Error
-            }
+        }.retryWhen { _, _ ->
+            _screenState.value = DictionaryState.Error
             true
         }.flowOn(Dispatchers.IO).launchIn(viewModelScope)
     }

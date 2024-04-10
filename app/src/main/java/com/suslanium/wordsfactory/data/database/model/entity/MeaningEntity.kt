@@ -1,4 +1,4 @@
-package com.suslanium.wordsfactory.data.database.model
+package com.suslanium.wordsfactory.data.database.model.entity
 
 import androidx.room.Entity
 import androidx.room.ForeignKey

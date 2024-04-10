@@ -2,7 +2,7 @@ package com.suslanium.wordsfactory.di
 
 import android.util.Patterns
 import com.suslanium.wordsfactory.data.datasource.WordLocalDataSource
-import com.suslanium.wordsfactory.data.network.api.WordApi
+import com.suslanium.wordsfactory.data.datasource.WordRemoteDataSource
 import com.suslanium.wordsfactory.data.repository.AuthRepositoryImpl
 import com.suslanium.wordsfactory.data.repository.WordRepositoryImpl
 import com.suslanium.wordsfactory.domain.repository.AuthRepository
@@ -21,9 +21,9 @@ import org.koin.dsl.module
 private fun provideAuthRepository(): AuthRepository = AuthRepositoryImpl()
 
 private fun provideWordRepository(
-    wordApi: WordApi,
+    wordRemoteDataSource: WordRemoteDataSource,
     wordLocalDataSource: WordLocalDataSource
-): WordRepository = WordRepositoryImpl(wordApi, wordLocalDataSource)
+): WordRepository = WordRepositoryImpl(wordRemoteDataSource, wordLocalDataSource)
 
 fun provideDomainModule() = module {
     single {

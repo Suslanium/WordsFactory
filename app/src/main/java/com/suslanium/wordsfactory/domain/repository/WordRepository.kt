@@ -5,7 +5,7 @@ import com.suslanium.wordsfactory.domain.entity.dictionary.WordInfo
 
 interface WordRepository {
 
-    suspend fun getWordInfo(word: String) : WordInfo
+    suspend fun getWordInfo(word: String) : WordInfo?
 
     suspend fun addWordToDictionary(wordEtymologies: List<WordEtymology>)
 
