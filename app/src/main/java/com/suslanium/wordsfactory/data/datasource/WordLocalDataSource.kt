@@ -3,6 +3,7 @@ package com.suslanium.wordsfactory.data.datasource
 import com.suslanium.wordsfactory.data.database.dao.DictionaryDao
 import com.suslanium.wordsfactory.data.database.model.entity.DefinitionEntity
 import com.suslanium.wordsfactory.data.database.model.entity.EtymologyEntity
+import com.suslanium.wordsfactory.data.database.model.entity.LearnCoefficient
 import com.suslanium.wordsfactory.data.database.model.entity.MeaningEntity
 import com.suslanium.wordsfactory.data.database.model.entity.WordEntity
 import com.suslanium.wordsfactory.domain.entity.dictionary.Definition
@@ -42,8 +43,9 @@ class WordLocalDataSource(private val dictionaryDao: DictionaryDao) {
     }
 
     suspend fun addWordToDictionary(wordEtymologies: List<WordEtymology>) {
+        val word = wordEtymologies.first().word.lowercase()
         val wordId =
-            dictionaryDao.upsertWord(WordEntity(word = wordEtymologies.first().word.lowercase()))
+            dictionaryDao.upsertWord(WordEntity(word = word))
 
         wordEtymologies.forEach { wordEtymology ->
             val etymologyId = dictionaryDao.upsertEtymology(
@@ -72,6 +74,7 @@ class WordLocalDataSource(private val dictionaryDao: DictionaryDao) {
                 }
             }
         }
+        dictionaryDao.insertWordCoefficient(LearnCoefficient(word = word))
     }
 
     suspend fun deleteWord(word: String) {

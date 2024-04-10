@@ -11,7 +11,8 @@ import androidx.room.PrimaryKey
         entity = WordEntity::class,
         parentColumns = ["wordId"],
         childColumns = ["wordOwnerId"],
-        onDelete = CASCADE
+        onDelete = CASCADE,
+        onUpdate = CASCADE
     )], indices = [Index(value = ["wordOwnerId"])]
 )
 data class EtymologyEntity(

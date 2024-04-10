@@ -11,7 +11,8 @@ import androidx.room.PrimaryKey
         entity = EtymologyEntity::class,
         parentColumns = ["etymologyId"],
         childColumns = ["etymologyOwnerId"],
-        onDelete = CASCADE
+        onDelete = CASCADE,
+        onUpdate = CASCADE
     )], indices = [Index(value = ["etymologyOwnerId"])]
 )
 data class MeaningEntity(
