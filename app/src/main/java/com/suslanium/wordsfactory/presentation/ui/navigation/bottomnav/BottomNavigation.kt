@@ -5,6 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.suslanium.wordsfactory.presentation.ui.screen.dictionary.DictionaryScreen
+import com.suslanium.wordsfactory.presentation.ui.screen.training.TrainingScreen
 
 object BottomNavigationDestinations {
     const val DICTIONARY = "dictionary"
@@ -20,7 +21,7 @@ fun BottomNavigation(bottomNavController: NavHostController, rootNavController: 
         }
 
         composable(BottomNavigationDestinations.TRAINING) {
-
+            TrainingScreen {}
         }
 
         composable(BottomNavigationDestinations.VIDEO) {
