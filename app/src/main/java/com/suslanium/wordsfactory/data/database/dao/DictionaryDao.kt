@@ -78,7 +78,8 @@ interface DictionaryDao {
              WHERE c2.word <> c.word 
              ORDER BY RANDOM() 
              LIMIT 1) as firstIncorrectAnswer 
-        FROM learn_coefficient c 
+        FROM learn_coefficient c
+        WHERE c.word IN (SELECT w2.word FROM words w2)
         ORDER BY c.coefficient ASC 
         LIMIT 10
     )
@@ -86,7 +87,7 @@ interface DictionaryDao {
     )
     suspend fun getTestQuestions(): List<TestQuestion>
 
-    @Query("SELECT COUNT(*) FROM learn_coefficient WHERE coefficient > 5")
+    @Query("SELECT COUNT(*) FROM learn_coefficient c WHERE c.coefficient > 5 AND c.word IN (SELECT w.word FROM words w)")
     suspend fun getLearnedWordsCount(): Int
 
 }
