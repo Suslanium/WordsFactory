@@ -1,15 +1,22 @@
 package com.suslanium.wordsfactory.di
 
 import android.util.Patterns
+import com.suslanium.wordsfactory.data.database.dao.DictionaryDao
 import com.suslanium.wordsfactory.data.datasource.WordLocalDataSource
 import com.suslanium.wordsfactory.data.datasource.WordRemoteDataSource
 import com.suslanium.wordsfactory.data.repository.AuthRepositoryImpl
+import com.suslanium.wordsfactory.data.repository.TestRepositoryImpl
 import com.suslanium.wordsfactory.data.repository.WordRepositoryImpl
 import com.suslanium.wordsfactory.domain.repository.AuthRepository
+import com.suslanium.wordsfactory.domain.repository.TestRepository
 import com.suslanium.wordsfactory.domain.repository.WordRepository
 import com.suslanium.wordsfactory.domain.usecase.AddWordToDictionaryUseCase
 import com.suslanium.wordsfactory.domain.usecase.CheckUserLoggedInUseCase
+import com.suslanium.wordsfactory.domain.usecase.DecreaseWordCoefficientUseCase
+import com.suslanium.wordsfactory.domain.usecase.GetSavedWordCountUseCase
+import com.suslanium.wordsfactory.domain.usecase.GetTestQuestionsUseCase
 import com.suslanium.wordsfactory.domain.usecase.GetWordInfoUseCase
+import com.suslanium.wordsfactory.domain.usecase.IncreaseWordCoefficientUseCase
 import com.suslanium.wordsfactory.domain.usecase.LoginUseCase
 import com.suslanium.wordsfactory.domain.usecase.RegisterUseCase
 import com.suslanium.wordsfactory.domain.usecase.RemoveWordFromDictionaryUseCase
@@ -25,6 +32,10 @@ private fun provideWordRepository(
     wordLocalDataSource: WordLocalDataSource
 ): WordRepository = WordRepositoryImpl(wordRemoteDataSource, wordLocalDataSource)
 
+private fun provideTestRepository(
+    dictionaryDao: DictionaryDao
+): TestRepository = TestRepositoryImpl(dictionaryDao)
+
 fun provideDomainModule() = module {
     single {
         provideAuthRepository()
@@ -32,6 +43,10 @@ fun provideDomainModule() = module {
 
     single {
         provideWordRepository(get(), get())
+    }
+
+    single {
+        provideTestRepository(get())
     }
 
     factory {
@@ -72,5 +87,21 @@ fun provideDomainModule() = module {
 
     factory {
         RemoveWordFromDictionaryUseCase(get())
+    }
+
+    factory {
+        GetTestQuestionsUseCase(get())
+    }
+
+    factory {
+        IncreaseWordCoefficientUseCase(get())
+    }
+
+    factory {
+        DecreaseWordCoefficientUseCase(get())
+    }
+
+    factory {
+        GetSavedWordCountUseCase(get())
     }
 }

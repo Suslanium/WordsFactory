@@ -34,4 +34,8 @@
     <string name="dict_error_desc">Check your internet connection or try again later</string>
     <string name="add_dictionary">Add to dictionary</string>
     <string name="remove_dictionary">Remove from dictionary</string>
+    <string name="training_message_first_part">There are </string>
+    <string name="training_message_second_part"> words  in your Dictionary.  Start the Training?</string>
+    <string name="start">Start</string>
+    <string name="training_message_empty_dictionary">Add some words to your dictionary before training.</string>
 </resources>

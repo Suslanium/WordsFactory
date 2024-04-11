@@ -81,4 +81,6 @@ class WordLocalDataSource(private val dictionaryDao: DictionaryDao) {
         dictionaryDao.deleteWord(word)
     }
 
+    fun getSavedWordCount() = dictionaryDao.getDictionaryWordsCount()
+
 }

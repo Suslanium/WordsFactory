@@ -24,4 +24,7 @@ class WordRepositoryImpl(
 
     override suspend fun removeWordFromDictionary(word: String) =
         wordLocalDataSource.deleteWord(word)
+
+    override fun getSavedWordCount() = wordLocalDataSource.getSavedWordCount()
+
 }

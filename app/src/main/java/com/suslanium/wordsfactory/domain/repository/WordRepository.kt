@@ -2,6 +2,7 @@ package com.suslanium.wordsfactory.domain.repository
 
 import com.suslanium.wordsfactory.domain.entity.dictionary.WordEtymology
 import com.suslanium.wordsfactory.domain.entity.dictionary.WordInfo
+import kotlinx.coroutines.flow.Flow
 
 interface WordRepository {
 
@@ -10,5 +11,7 @@ interface WordRepository {
     suspend fun addWordToDictionary(wordEtymologies: List<WordEtymology>)
 
     suspend fun removeWordFromDictionary(word: String)
+
+    fun getSavedWordCount(): Flow<Int>
 
 }

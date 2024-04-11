@@ -13,6 +13,7 @@ import com.suslanium.wordsfactory.data.database.model.entity.EtymologyEntity
 import com.suslanium.wordsfactory.data.database.model.entity.LearnCoefficient
 import com.suslanium.wordsfactory.data.database.model.entity.MeaningEntity
 import com.suslanium.wordsfactory.data.database.model.entity.WordEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface DictionaryDao {
@@ -40,7 +41,7 @@ interface DictionaryDao {
     suspend fun isWordInDictionary(word: String): Boolean
 
     @Query("SELECT COUNT(*) FROM words")
-    suspend fun getDictionaryWordsCount(): Int
+    fun getDictionaryWordsCount(): Flow<Int>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertWordCoefficient(wordCoefficient: LearnCoefficient)
