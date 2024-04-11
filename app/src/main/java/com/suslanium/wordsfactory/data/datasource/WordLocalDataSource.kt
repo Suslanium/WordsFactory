@@ -1,5 +1,6 @@
 package com.suslanium.wordsfactory.data.datasource
 
+import com.suslanium.wordsfactory.data.Common.titleCase
 import com.suslanium.wordsfactory.data.database.dao.DictionaryDao
 import com.suslanium.wordsfactory.data.database.model.entity.DefinitionEntity
 import com.suslanium.wordsfactory.data.database.model.entity.EtymologyEntity
@@ -10,7 +11,6 @@ import com.suslanium.wordsfactory.domain.entity.dictionary.Definition
 import com.suslanium.wordsfactory.domain.entity.dictionary.Meaning
 import com.suslanium.wordsfactory.domain.entity.dictionary.WordEtymology
 import com.suslanium.wordsfactory.domain.entity.dictionary.WordInfo
-import java.util.Locale
 
 class WordLocalDataSource(private val dictionaryDao: DictionaryDao) {
 
@@ -20,11 +20,7 @@ class WordLocalDataSource(private val dictionaryDao: DictionaryDao) {
         return WordInfo(
             etymologies = wordWithEtymologies.etymologies.map { etymology ->
                 WordEtymology(
-                    word = wordWithEtymologies.word.word.replaceFirstChar {
-                        if (it.isLowerCase()) it.titlecase(
-                            Locale.ENGLISH
-                        ) else it.toString()
-                    },
+                    word = wordWithEtymologies.word.word.titleCase(),
                     phonetic = etymology.etymology.phonetic,
                     audioUrl = etymology.etymology.audioUrl,
                     meanings = etymology.meanings.map { meaning ->
@@ -78,7 +74,7 @@ class WordLocalDataSource(private val dictionaryDao: DictionaryDao) {
     }
 
     suspend fun deleteWord(word: String) {
-        dictionaryDao.deleteWord(word)
+        dictionaryDao.deleteWord(word.lowercase())
     }
 
     fun getSavedWordCount() = dictionaryDao.getDictionaryWordsCount()

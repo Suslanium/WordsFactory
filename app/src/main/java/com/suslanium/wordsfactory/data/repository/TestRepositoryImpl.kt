@@ -1,5 +1,6 @@
 package com.suslanium.wordsfactory.data.repository
 
+import com.suslanium.wordsfactory.data.Common.titleCase
 import com.suslanium.wordsfactory.data.database.dao.DictionaryDao
 import com.suslanium.wordsfactory.domain.entity.training.TestQuestion
 import com.suslanium.wordsfactory.domain.repository.TestRepository
@@ -18,15 +19,18 @@ class TestRepositoryImpl(
             val secondIncorrectAnswer =
                 question.secondIncorrectAnswer ?: stubWords.minus(firstIncorrectAnswer).random()
             TestQuestion(
-                correctAnswer = question.correctAnswer,
-                correctAnswerDefinition = question.correctAnswerDefinition,
-                firstIncorrectAnswer = firstIncorrectAnswer,
-                secondIncorrectAnswer = secondIncorrectAnswer
+                correctAnswerDefinition = question.correctAnswerDefinition, answers = listOf(
+                    question.correctAnswer.titleCase() to true,
+                    firstIncorrectAnswer.titleCase() to false,
+                    secondIncorrectAnswer.titleCase() to false
+                ).shuffled()
             )
         }
     }
 
-    override suspend fun increaseWordCoefficient(word: String) = dictionaryDao.incrementWordCoefficient(word)
+    override suspend fun increaseWordCoefficient(word: String) =
+        dictionaryDao.incrementWordCoefficient(word.lowercase())
 
-    override suspend fun decreaseWordCoefficient(word: String) = dictionaryDao.decrementWordCoefficient(word)
+    override suspend fun decreaseWordCoefficient(word: String) =
+        dictionaryDao.decrementWordCoefficient(word.lowercase())
 }

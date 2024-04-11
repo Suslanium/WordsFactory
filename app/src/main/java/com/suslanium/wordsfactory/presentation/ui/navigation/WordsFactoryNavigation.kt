@@ -9,12 +9,14 @@ import com.suslanium.wordsfactory.presentation.ui.screen.auth.signin.SignInScree
 import com.suslanium.wordsfactory.presentation.ui.screen.auth.signup.SignUpScreen
 import com.suslanium.wordsfactory.presentation.ui.screen.intro.IntroScreen
 import com.suslanium.wordsfactory.presentation.ui.screen.splash.SplashScreen
+import com.suslanium.wordsfactory.presentation.ui.screen.test.TestScreen
 
 object WordsFactoryDestinations {
     const val SPLASH = "splash"
     const val INTRO = "intro"
     const val SIGN_UP = "sign_up"
     const val SIGN_IN = "sign_in"
+    const val TEST = "test"
     const val BOTTOM_NAVIGATION = "bottom_nav"
 }
 
@@ -70,6 +72,10 @@ fun WordsFactoryNavigation(navController: NavHostController) {
 
         composable(WordsFactoryDestinations.BOTTOM_NAVIGATION) {
             BottomNavigationRoot(rootNavController = navController)
+        }
+
+        composable(WordsFactoryDestinations.TEST) {
+            TestScreen()
         }
     }
 }

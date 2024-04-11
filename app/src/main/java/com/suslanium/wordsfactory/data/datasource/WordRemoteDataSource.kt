@@ -1,12 +1,12 @@
 package com.suslanium.wordsfactory.data.datasource
 
+import com.suslanium.wordsfactory.data.Common.titleCase
 import com.suslanium.wordsfactory.data.database.dao.DictionaryDao
 import com.suslanium.wordsfactory.data.network.api.WordApi
 import com.suslanium.wordsfactory.data.network.model.WordEtymologyModel
 import com.suslanium.wordsfactory.domain.entity.dictionary.WordEtymology
 import com.suslanium.wordsfactory.domain.entity.dictionary.WordInfo
 import retrofit2.HttpException
-import java.util.Locale
 
 class WordRemoteDataSource(
     private val wordApi: WordApi, private val dictionaryDao: DictionaryDao
@@ -39,11 +39,7 @@ class WordRemoteDataSource(
                 ?: phonetics.firstOrNull { phonetic -> !phonetic.audio.isNullOrBlank() }
         }
         WordEtymology(
-            word = wordEtymologyModel.word.replaceFirstChar {
-                if (it.isLowerCase()) it.titlecase(
-                    Locale.ENGLISH
-                ) else it.toString()
-            },
+            word = wordEtymologyModel.word.titleCase(),
             phonetic = selectedPhonetic?.text ?: wordEtymologyModel.phonetic,
             audioUrl = selectedPhonetic?.audio,
             meanings = wordEtymologyModel.meanings

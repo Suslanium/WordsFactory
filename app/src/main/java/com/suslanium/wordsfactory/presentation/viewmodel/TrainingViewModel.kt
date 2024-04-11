@@ -25,7 +25,7 @@ class TrainingViewModel(
     val savedWordCount: IntState
         get() = _savedWordCount
 
-    private val _launchTestEvents = MutableSharedFlow<Unit>(replay = 1)
+    private val _launchTestEvents = MutableSharedFlow<Unit>()
     val launchTestEvents = _launchTestEvents.asSharedFlow()
 
     private val _shouldShowTimer = mutableStateOf(false)
@@ -41,8 +41,10 @@ class TrainingViewModel(
     fun startCountDown() {
         viewModelScope.launch(Dispatchers.Default) {
             _shouldShowTimer.value = true
-            delay(5000)
+            delay(5500)
             _launchTestEvents.emit(Unit)
+            delay(1000)
+            _shouldShowTimer.value = false
         }
     }
 

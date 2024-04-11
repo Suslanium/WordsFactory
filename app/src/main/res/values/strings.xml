@@ -39,4 +39,9 @@
     <string name="start">Start</string>
     <string name="training_message_empty_dictionary">Add some words to your dictionary before training.</string>
     <string name="go">GO!</string>
+    <string name="question_index">%1$d of %2$d</string>
+    <string name="first_answer">A.</string>
+    <string name="second_answer">B.</string>
+    <string name="third_answer">C.</string>
+    <string name="unknown_answer_index">X.</string>
 </resources>
