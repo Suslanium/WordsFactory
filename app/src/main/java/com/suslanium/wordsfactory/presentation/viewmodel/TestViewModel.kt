@@ -66,6 +66,9 @@ class TestViewModel(
                 delay(QUESTION_CHANGE_DELAY)
                 _canAnswer = true
                 delay(QUESTION_DURATION)
+                (_testState.value as? TestState.Question)?.let { question ->
+                    decreaseWordCoefficientUseCase(question.question.answers.first { it.second }.first)
+                }
             }
             finishTest()
         }

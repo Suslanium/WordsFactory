@@ -1,4 +1,4 @@
-package com.suslanium.wordsfactory.presentation.ui.screen.test.question
+package com.suslanium.wordsfactory.presentation.ui.screen.test.parts.question
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -20,8 +20,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import com.suslanium.wordsfactory.R
 import com.suslanium.wordsfactory.domain.entity.training.TestQuestion
-import com.suslanium.wordsfactory.presentation.ui.screen.test.question.components.AnswerTimer
-import com.suslanium.wordsfactory.presentation.ui.screen.test.question.components.AnswerVariant
+import com.suslanium.wordsfactory.presentation.ui.screen.test.parts.question.components.AnswerTimer
+import com.suslanium.wordsfactory.presentation.ui.screen.test.parts.question.components.AnswerVariant
 import com.suslanium.wordsfactory.presentation.ui.theme.Dark
 import com.suslanium.wordsfactory.presentation.ui.theme.DarkGray
 import com.suslanium.wordsfactory.presentation.ui.theme.HeadingH4

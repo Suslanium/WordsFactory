@@ -1,4 +1,4 @@
-package com.suslanium.wordsfactory.presentation.ui.screen.test.question.components
+package com.suslanium.wordsfactory.presentation.ui.screen.test.parts.question.components
 
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.animate

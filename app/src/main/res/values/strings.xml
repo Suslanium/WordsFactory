@@ -44,4 +44,7 @@
     <string name="second_answer">B.</string>
     <string name="third_answer">C.</string>
     <string name="unknown_answer_index">X.</string>
+    <string name="training_finished">Training is finished</string>
+    <string name="test_results">Correct: %1$d\nIncorrect: %2$d</string>
+    <string name="again">Again</string>
 </resources>
