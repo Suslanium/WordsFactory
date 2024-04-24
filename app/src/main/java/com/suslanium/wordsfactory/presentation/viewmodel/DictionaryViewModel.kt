@@ -1,13 +1,16 @@
 package com.suslanium.wordsfactory.presentation.viewmodel
 
+import android.app.Application
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.glance.appwidget.updateAll
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.suslanium.wordsfactory.domain.usecase.AddWordToDictionaryUseCase
 import com.suslanium.wordsfactory.domain.usecase.GetWordInfoUseCase
 import com.suslanium.wordsfactory.domain.usecase.RemoveWordFromDictionaryUseCase
 import com.suslanium.wordsfactory.presentation.state.DictionaryState
+import com.suslanium.wordsfactory.presentation.widget.WordsFactoryWidget
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -24,7 +27,8 @@ import kotlinx.coroutines.launch
 class DictionaryViewModel(
     private val getWordInfoUseCase: GetWordInfoUseCase,
     private val addWordToDictionaryUseCase: AddWordToDictionaryUseCase,
-    private val removeWordFromDictionaryUseCase: RemoveWordFromDictionaryUseCase
+    private val removeWordFromDictionaryUseCase: RemoveWordFromDictionaryUseCase,
+    private val application: Application
 ) : ViewModel() {
 
     private val _currentQuery = mutableStateOf("")
@@ -81,6 +85,7 @@ class DictionaryViewModel(
                     _addedToDictionary.value = true
                 }
             }
+            WordsFactoryWidget().updateAll(application)
         }
     }
 

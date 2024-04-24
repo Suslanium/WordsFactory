@@ -14,4 +14,6 @@ interface WordRepository {
 
     fun getSavedWordCount(): Flow<Int>
 
+    fun getLearntWordsCount(): Flow<Int>
+
 }

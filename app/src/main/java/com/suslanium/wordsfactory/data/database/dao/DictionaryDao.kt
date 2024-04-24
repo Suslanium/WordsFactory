@@ -88,6 +88,6 @@ interface DictionaryDao {
     suspend fun getTestQuestions(): List<TestQuestion>
 
     @Query("SELECT COUNT(*) FROM learn_coefficient c WHERE c.coefficient > 5 AND c.word IN (SELECT w.word FROM words w)")
-    suspend fun getLearnedWordsCount(): Int
+    fun getLearntWordsCount(): Flow<Int>
 
 }

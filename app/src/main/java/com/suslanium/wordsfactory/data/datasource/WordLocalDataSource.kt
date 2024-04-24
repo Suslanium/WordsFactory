@@ -79,4 +79,6 @@ class WordLocalDataSource(private val dictionaryDao: DictionaryDao) {
 
     fun getSavedWordCount() = dictionaryDao.getDictionaryWordsCount()
 
+    fun getLearntWordsCount() = dictionaryDao.getLearntWordsCount()
+
 }

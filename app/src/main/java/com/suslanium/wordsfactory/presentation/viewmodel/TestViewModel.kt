@@ -1,7 +1,9 @@
 package com.suslanium.wordsfactory.presentation.viewmodel
 
+import android.app.Application
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.glance.appwidget.updateAll
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.suslanium.wordsfactory.domain.entity.training.TestQuestion
@@ -9,6 +11,7 @@ import com.suslanium.wordsfactory.domain.usecase.DecreaseWordCoefficientUseCase
 import com.suslanium.wordsfactory.domain.usecase.GetTestQuestionsUseCase
 import com.suslanium.wordsfactory.domain.usecase.IncreaseWordCoefficientUseCase
 import com.suslanium.wordsfactory.presentation.state.TestState
+import com.suslanium.wordsfactory.presentation.widget.WordsFactoryWidget
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -17,7 +20,8 @@ import kotlinx.coroutines.launch
 class TestViewModel(
     private val getTestQuestionsUseCase: GetTestQuestionsUseCase,
     private val increaseWordCoefficientUseCase: IncreaseWordCoefficientUseCase,
-    private val decreaseWordCoefficientUseCase: DecreaseWordCoefficientUseCase
+    private val decreaseWordCoefficientUseCase: DecreaseWordCoefficientUseCase,
+    private val application: Application
 ) : ViewModel() {
 
     companion object {
@@ -91,6 +95,7 @@ class TestViewModel(
             } else {
                 decreaseWordCoefficientUseCase(answer)
             }
+            WordsFactoryWidget().updateAll(application)
 
             if (questions.isNotEmpty()) {
                 startAutoQuestionUpdates()

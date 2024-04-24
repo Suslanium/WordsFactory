@@ -6,6 +6,7 @@ import com.suslanium.wordsfactory.presentation.viewmodel.SignUpViewModel
 import com.suslanium.wordsfactory.presentation.viewmodel.SplashViewModel
 import com.suslanium.wordsfactory.presentation.viewmodel.TestViewModel
 import com.suslanium.wordsfactory.presentation.viewmodel.TrainingViewModel
+import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -23,7 +24,7 @@ fun providePresentationModule() = module {
     }
 
     viewModel {
-        DictionaryViewModel(get(), get(), get())
+        DictionaryViewModel(get(), get(), get(), androidApplication())
     }
 
     viewModel {
@@ -31,6 +32,6 @@ fun providePresentationModule() = module {
     }
 
     viewModel {
-        TestViewModel(get(), get(), get())
+        TestViewModel(get(), get(), get(), androidApplication())
     }
 }

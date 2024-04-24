@@ -13,6 +13,7 @@ import com.suslanium.wordsfactory.domain.repository.WordRepository
 import com.suslanium.wordsfactory.domain.usecase.AddWordToDictionaryUseCase
 import com.suslanium.wordsfactory.domain.usecase.CheckUserLoggedInUseCase
 import com.suslanium.wordsfactory.domain.usecase.DecreaseWordCoefficientUseCase
+import com.suslanium.wordsfactory.domain.usecase.GetLearntWordCountUseCase
 import com.suslanium.wordsfactory.domain.usecase.GetSavedWordCountUseCase
 import com.suslanium.wordsfactory.domain.usecase.GetTestQuestionsUseCase
 import com.suslanium.wordsfactory.domain.usecase.GetWordInfoUseCase
@@ -103,5 +104,9 @@ fun provideDomainModule() = module {
 
     factory {
         GetSavedWordCountUseCase(get())
+    }
+
+    factory {
+        GetLearntWordCountUseCase(get())
     }
 }
