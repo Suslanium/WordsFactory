@@ -47,4 +47,7 @@
     <string name="training_finished">Training is finished</string>
     <string name="test_results">Correct: %1$d\nIncorrect: %2$d</string>
     <string name="again">Again</string>
+    <string name="my_dictionary">My dictionary</string>
+    <string name="i_already_remember">I already remember</string>
+    <string name="words_template">%1$d Words</string>
 </resources>

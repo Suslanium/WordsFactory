@@ -19,3 +19,5 @@ val PageIndicatorInactive = Color(0xFFD5D4D4)
 
 val GradientLast = Color(0xFFF29F3F)
 val GradientMiddle = Color(0xFFE3562A)
+
+val Black50 = Color(0xFF808080)

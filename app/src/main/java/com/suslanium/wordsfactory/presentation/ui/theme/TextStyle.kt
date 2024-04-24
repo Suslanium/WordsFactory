@@ -3,6 +3,8 @@ package com.suslanium.wordsfactory.presentation.ui.theme
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import com.suslanium.wordsfactory.R
+import com.suslanium.wordsfactory.presentation.widget.text.GlanceTextStyle
 
 val HeadingH1 = TextStyle(
     fontFamily = Rubik,
@@ -25,6 +27,12 @@ val HeadingH3 = TextStyle(
     lineHeight = 42.sp
 )
 
+val GlanceHeadingH3 = GlanceTextStyle(
+    fontSize = 32.sp,
+    letterSpacing = -0.01f,
+    font = R.font.rubik_bold
+)
+
 val HeadingH4 = TextStyle(
     fontFamily = Rubik,
     fontWeight = FontWeight.W500,
@@ -39,6 +47,12 @@ val HeadingH5 = TextStyle(
     lineHeight = 26.sp
 )
 
+val GlanceHeadingH5 = GlanceTextStyle(
+    fontSize = 20.sp,
+    letterSpacing = -0.005f,
+    font = R.font.rubik_medium
+)
+
 val ParagraphLarge = TextStyle(
     fontFamily = Rubik,
     fontWeight = FontWeight.W400,
@@ -51,6 +65,11 @@ val ParagraphMedium = TextStyle(
     fontWeight = FontWeight.W400,
     fontSize = 14.sp,
     lineHeight = 21.sp
+)
+
+val GlanceParagraphMedium = GlanceTextStyle(
+    fontSize = 14.sp,
+    font = R.font.rubik_regular
 )
 
 val ParagraphSmall = TextStyle(
