@@ -28,4 +28,5 @@ class WordRepositoryImpl(
     override fun getSavedWordCount() = wordLocalDataSource.getSavedWordCount()
 
     override fun getLearntWordsCount() = wordLocalDataSource.getLearntWordsCount()
+
 }

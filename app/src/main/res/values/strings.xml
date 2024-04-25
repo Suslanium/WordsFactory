@@ -50,4 +50,9 @@
     <string name="my_dictionary">My dictionary</string>
     <string name="i_already_remember">I already remember</string>
     <string name="words_template">%1$d Words</string>
+    <string name="notification_channel_name">Test reminders</string>
+    <string name="notification_channel_description">Get daily test reminders</string>
+    <string name="notification_title">Don\'t forget to take the test!</string>
+    <string name="notification_message">Taking a test every day will help you learn English</string>
+    <string name="notification_permission_rejected_msg">Notifications are required for daily test reminders</string>
 </resources>

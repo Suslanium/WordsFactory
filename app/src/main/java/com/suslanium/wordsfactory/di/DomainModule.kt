@@ -2,6 +2,7 @@ package com.suslanium.wordsfactory.di
 
 import android.util.Patterns
 import com.suslanium.wordsfactory.data.database.dao.DictionaryDao
+import com.suslanium.wordsfactory.data.datasource.TestTimestampDataSource
 import com.suslanium.wordsfactory.data.datasource.WordLocalDataSource
 import com.suslanium.wordsfactory.data.datasource.WordRemoteDataSource
 import com.suslanium.wordsfactory.data.repository.AuthRepositoryImpl
@@ -18,9 +19,11 @@ import com.suslanium.wordsfactory.domain.usecase.GetSavedWordCountUseCase
 import com.suslanium.wordsfactory.domain.usecase.GetTestQuestionsUseCase
 import com.suslanium.wordsfactory.domain.usecase.GetWordInfoUseCase
 import com.suslanium.wordsfactory.domain.usecase.IncreaseWordCoefficientUseCase
+import com.suslanium.wordsfactory.domain.usecase.IsNotificationPendingUseCase
 import com.suslanium.wordsfactory.domain.usecase.LoginUseCase
 import com.suslanium.wordsfactory.domain.usecase.RegisterUseCase
 import com.suslanium.wordsfactory.domain.usecase.RemoveWordFromDictionaryUseCase
+import com.suslanium.wordsfactory.domain.usecase.SetLastTestTimestampUseCase
 import com.suslanium.wordsfactory.domain.usecase.ValidateEmailUseCase
 import com.suslanium.wordsfactory.domain.usecase.ValidateNameUseCase
 import com.suslanium.wordsfactory.domain.usecase.ValidatePasswordUseCase
@@ -34,8 +37,9 @@ private fun provideWordRepository(
 ): WordRepository = WordRepositoryImpl(wordRemoteDataSource, wordLocalDataSource)
 
 private fun provideTestRepository(
-    dictionaryDao: DictionaryDao
-): TestRepository = TestRepositoryImpl(dictionaryDao)
+    dictionaryDao: DictionaryDao,
+    testTimestampDataSource: TestTimestampDataSource
+): TestRepository = TestRepositoryImpl(dictionaryDao, testTimestampDataSource)
 
 fun provideDomainModule() = module {
     single {
@@ -47,7 +51,7 @@ fun provideDomainModule() = module {
     }
 
     single {
-        provideTestRepository(get())
+        provideTestRepository(get(), get())
     }
 
     factory {
@@ -109,4 +113,13 @@ fun provideDomainModule() = module {
     factory {
         GetLearntWordCountUseCase(get())
     }
+
+    factory {
+        SetLastTestTimestampUseCase(get())
+    }
+
+    factory {
+        IsNotificationPendingUseCase(get())
+    }
+
 }

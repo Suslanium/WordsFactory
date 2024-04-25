@@ -10,6 +10,7 @@ import com.suslanium.wordsfactory.domain.entity.training.TestQuestion
 import com.suslanium.wordsfactory.domain.usecase.DecreaseWordCoefficientUseCase
 import com.suslanium.wordsfactory.domain.usecase.GetTestQuestionsUseCase
 import com.suslanium.wordsfactory.domain.usecase.IncreaseWordCoefficientUseCase
+import com.suslanium.wordsfactory.domain.usecase.SetLastTestTimestampUseCase
 import com.suslanium.wordsfactory.presentation.state.TestState
 import com.suslanium.wordsfactory.presentation.widget.WordsFactoryWidget
 import kotlinx.coroutines.Dispatchers
@@ -21,6 +22,7 @@ class TestViewModel(
     private val getTestQuestionsUseCase: GetTestQuestionsUseCase,
     private val increaseWordCoefficientUseCase: IncreaseWordCoefficientUseCase,
     private val decreaseWordCoefficientUseCase: DecreaseWordCoefficientUseCase,
+    private val setLastTestTimestampUseCase: SetLastTestTimestampUseCase,
     private val application: Application
 ) : ViewModel() {
 
@@ -80,6 +82,9 @@ class TestViewModel(
 
     private fun finishTest() {
         _testState.value = TestState.Result(correctAnswerCount, totalQuestionCount)
+        viewModelScope.launch(Dispatchers.IO) {
+            setLastTestTimestampUseCase()
+        }
     }
 
     fun onAnswerSelected(answer: String, isCorrect: Boolean) {

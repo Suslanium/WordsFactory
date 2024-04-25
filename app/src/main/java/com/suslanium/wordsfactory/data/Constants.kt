@@ -8,6 +8,9 @@ object Constants {
 
     const val WORD_INFO_PATH_ARGUMENT = "word"
     const val WORD_INFO_URL = "{$WORD_INFO_PATH_ARGUMENT}"
+    const val DB_NAME = "dictionary_db"
+    const val PREFS_NAME = "dictionary_prefs"
+    const val TIMESTAMP_KEY = "timestamp"
 
 }
 

@@ -88,4 +88,8 @@ dependencies {
 
     implementation(libs.androidx.glance.appwidget)
     implementation(libs.androidx.glance.material3)
+
+    implementation(libs.androidx.datastore.preferences)
+
+    implementation(libs.androidx.work.runtime.ktx)
 }

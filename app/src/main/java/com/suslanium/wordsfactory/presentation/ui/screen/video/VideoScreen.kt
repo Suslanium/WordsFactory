@@ -1,5 +1,6 @@
 package com.suslanium.wordsfactory.presentation.ui.screen.video
 
+import android.annotation.SuppressLint
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -17,13 +18,14 @@ class VideoViewClient : WebViewClient() {
     }
 }
 
+@SuppressLint("SetJavaScriptEnabled")
 @Composable
 fun VideoScreen(client: WebViewClient = VideoViewClient()) {
-
     AndroidView(modifier = Modifier
         .fillMaxSize(), factory = { context ->
         WebView(context).apply {
             webViewClient = client
+            settings.javaScriptEnabled = true
             loadUrl(BASE_URL)
         }
     })
