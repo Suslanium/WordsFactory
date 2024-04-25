@@ -1,6 +1,9 @@
 package com.suslanium.wordsfactory.presentation.ui
 
 import android.Manifest.permission.POST_NOTIFICATIONS
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -14,21 +17,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
-import androidx.work.BackoffPolicy
-import androidx.work.Constraints
-import androidx.work.ExistingPeriodicWorkPolicy
-import androidx.work.NetworkType
-import androidx.work.PeriodicWorkRequestBuilder
-import androidx.work.WorkManager
 import com.suslanium.wordsfactory.R
-import com.suslanium.wordsfactory.domain.repository.TestRepository
-import com.suslanium.wordsfactory.presentation.notification.NotificationWorker
+import com.suslanium.wordsfactory.presentation.notification.NotificationReceiver
 import com.suslanium.wordsfactory.presentation.ui.navigation.WordsFactoryNavigation
 import com.suslanium.wordsfactory.presentation.ui.theme.WordsFactoryTheme
-import java.time.Duration
-import java.time.ZoneId
+import java.time.LocalTime
 import java.time.ZonedDateTime
-import java.util.concurrent.TimeUnit
 
 class MainActivity : ComponentActivity() {
 
@@ -67,30 +61,29 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun enqueueTestReminders() {
-        val workConstraints = Constraints.Builder().setRequiredNetworkType(NetworkType.NOT_REQUIRED)
-            .setRequiresBatteryNotLow(false).setRequiresCharging(false)
-            .setRequiresStorageNotLow(false).setRequiresDeviceIdle(false).build()
-
-        val workRequest = PeriodicWorkRequestBuilder<NotificationWorker>(
-            repeatInterval = 1, repeatIntervalTimeUnit = TimeUnit.DAYS
-        ).setBackoffCriteria(BackoffPolicy.LINEAR, 1, TimeUnit.MINUTES)
-            .setConstraints(workConstraints).setInitialDelay(calculateInitialNotificationDelay())
-            .setConstraints(workConstraints).build()
-
-        val workManager = WorkManager.getInstance(this)
-        workManager.enqueueUniquePeriodicWork(
-            "notification_worker", ExistingPeriodicWorkPolicy.CANCEL_AND_REENQUEUE, workRequest
-        )
-    }
-
-    private fun calculateInitialNotificationDelay(): Duration {
-        val currentTime = ZonedDateTime.now(ZoneId.systemDefault())
-        var notificationTime = currentTime.with(TestRepository.NOTIFICATION_TIME)
-
-        if (currentTime > notificationTime) {
-            notificationTime = notificationTime.plusDays(1)
+        val alarmIntent = Intent(this, NotificationReceiver::class.java).apply {
+            action = NotificationReceiver.INTENT_ACTION
         }
+        alarmIntent.setPackage(packageName)
+        var pendingIntent = PendingIntent.getBroadcast(
+            this, 0, alarmIntent, PendingIntent.FLAG_NO_CREATE or PendingIntent.FLAG_IMMUTABLE
+        )
+        if (pendingIntent == null) {
+            pendingIntent = PendingIntent.getBroadcast(
+                this, 0, alarmIntent, PendingIntent.FLAG_IMMUTABLE
+            )
+            var notificationTime = ZonedDateTime.now().with(LocalTime.of(20, 0))
+            if (ZonedDateTime.now() > notificationTime) {
+                notificationTime = notificationTime.plusDays(1)
+            }
 
-        return Duration.between(currentTime, notificationTime)
+            val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
+            alarmManager.setRepeating(
+                AlarmManager.RTC_WAKEUP,
+                notificationTime.toInstant().toEpochMilli(),
+                AlarmManager.INTERVAL_DAY,
+                pendingIntent
+            )
+        }
     }
 }
