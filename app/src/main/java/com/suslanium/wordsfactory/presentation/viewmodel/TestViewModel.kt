@@ -6,11 +6,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.glance.appwidget.updateAll
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.suslanium.wordsfactory.domain.entity.dictionary.WordWithCoefficient
 import com.suslanium.wordsfactory.domain.entity.training.TestQuestion
-import com.suslanium.wordsfactory.domain.usecase.DecreaseWordCoefficientUseCase
+import com.suslanium.wordsfactory.domain.usecase.CalculateNewWordCoefficientUseCase
+import com.suslanium.wordsfactory.domain.usecase.GetLeastLearnedWordsUseCase
+import com.suslanium.wordsfactory.domain.usecase.GetRandomWordsExceptUseCase
 import com.suslanium.wordsfactory.domain.usecase.GetTestQuestionsUseCase
-import com.suslanium.wordsfactory.domain.usecase.IncreaseWordCoefficientUseCase
 import com.suslanium.wordsfactory.domain.usecase.SetLastTestTimestampUseCase
+import com.suslanium.wordsfactory.domain.usecase.SetWordCoefficientUseCase
 import com.suslanium.wordsfactory.presentation.state.TestState
 import com.suslanium.wordsfactory.presentation.widget.WordsFactoryWidget
 import kotlinx.coroutines.Dispatchers
@@ -20,8 +23,10 @@ import kotlinx.coroutines.launch
 
 class TestViewModel(
     private val getTestQuestionsUseCase: GetTestQuestionsUseCase,
-    private val increaseWordCoefficientUseCase: IncreaseWordCoefficientUseCase,
-    private val decreaseWordCoefficientUseCase: DecreaseWordCoefficientUseCase,
+    private val getLeastLearnedWordsUseCase: GetLeastLearnedWordsUseCase,
+    private val getRandomWordsExceptUseCase: GetRandomWordsExceptUseCase,
+    private val calculateNewWordCoefficientUseCase: CalculateNewWordCoefficientUseCase,
+    private val setWordCoefficientUseCase: SetWordCoefficientUseCase,
     private val setLastTestTimestampUseCase: SetLastTestTimestampUseCase,
     private val application: Application
 ) : ViewModel() {
@@ -37,6 +42,7 @@ class TestViewModel(
 
     private var totalQuestionCount = 0
     private var correctAnswerCount = 0
+    private var currentTestWords = listOf<WordWithCoefficient>()
     private val questions = mutableListOf<TestQuestion>()
     private var _canAnswer = true
     val canAnswer
@@ -56,7 +62,10 @@ class TestViewModel(
             totalQuestionCount = 0
             correctAnswerCount = 0
             questions.clear()
-            questions.addAll(getTestQuestionsUseCase())
+            currentTestWords = getLeastLearnedWordsUseCase()
+            val randomWordsExceptTestWords =
+                getRandomWordsExceptUseCase(currentTestWords.map { it.wordInfo.etymologies.first().word })
+            questions.addAll(getTestQuestionsUseCase(currentTestWords, randomWordsExceptTestWords))
             totalQuestionCount = questions.size
             startAutoQuestionUpdates()
         }
@@ -73,7 +82,14 @@ class TestViewModel(
                 _canAnswer = true
                 delay(QUESTION_DURATION)
                 (_testState.value as? TestState.Question)?.let { question ->
-                    decreaseWordCoefficientUseCase(question.question.answers.first { it.second }.first)
+                    val word = question.question.answers.first { it.second }.first
+                    setWordCoefficientUseCase(
+                        word,
+                        calculateNewWordCoefficientUseCase(
+                            currentTestWords.first { it.wordInfo.etymologies.first().word == word },
+                            false
+                        )
+                    )
                 }
             }
             finishTest()
@@ -96,9 +112,20 @@ class TestViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             if (isCorrect) {
                 correctAnswerCount++
-                increaseWordCoefficientUseCase(answer)
+                setWordCoefficientUseCase(
+                    answer,
+                    calculateNewWordCoefficientUseCase(
+                        currentTestWords.first { it.wordInfo.etymologies.first().word == answer },
+                        true)
+                )
             } else {
-                decreaseWordCoefficientUseCase(answer)
+                setWordCoefficientUseCase(
+                    answer,
+                    calculateNewWordCoefficientUseCase(
+                        currentTestWords.first { it.wordInfo.etymologies.first().word == answer },
+                        false
+                    )
+                )
             }
             WordsFactoryWidget().updateAll(application)
 

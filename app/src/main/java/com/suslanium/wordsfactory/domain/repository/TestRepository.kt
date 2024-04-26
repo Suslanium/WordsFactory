@@ -1,14 +1,14 @@
 package com.suslanium.wordsfactory.domain.repository
 
-import com.suslanium.wordsfactory.domain.entity.training.TestQuestion
+import com.suslanium.wordsfactory.domain.entity.dictionary.WordWithCoefficient
 
 interface TestRepository {
 
-    suspend fun getTestQuestions(): List<TestQuestion>
+    suspend fun getLeastLearnedWords(): List<WordWithCoefficient>
 
-    suspend fun increaseWordCoefficient(word: String)
+    suspend fun getRandomWordsExcept(words: List<String>): List<String>
 
-    suspend fun decreaseWordCoefficient(word: String)
+    suspend fun setWordCoefficient(word: String, coefficient: Int)
 
     suspend fun setLastTestTimestamp()
 

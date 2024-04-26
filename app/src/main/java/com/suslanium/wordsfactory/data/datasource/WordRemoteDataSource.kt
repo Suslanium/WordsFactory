@@ -1,9 +1,9 @@
 package com.suslanium.wordsfactory.data.datasource
 
-import com.suslanium.wordsfactory.data.Common.titleCase
 import com.suslanium.wordsfactory.data.database.dao.DictionaryDao
 import com.suslanium.wordsfactory.data.network.api.WordApi
 import com.suslanium.wordsfactory.data.network.model.WordEtymologyModel
+import com.suslanium.wordsfactory.domain.Common.titleCase
 import com.suslanium.wordsfactory.domain.entity.dictionary.WordEtymology
 import com.suslanium.wordsfactory.domain.entity.dictionary.WordInfo
 import retrofit2.HttpException

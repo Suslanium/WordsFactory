@@ -32,6 +32,6 @@ fun providePresentationModule() = module {
     }
 
     viewModel {
-        TestViewModel(get(), get(), get(), get(), androidApplication())
+        TestViewModel(get(), get(), get(), get(), get(), get(), androidApplication())
     }
 }

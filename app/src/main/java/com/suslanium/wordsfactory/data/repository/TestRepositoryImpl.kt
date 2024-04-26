@@ -1,42 +1,34 @@
 package com.suslanium.wordsfactory.data.repository
 
-import com.suslanium.wordsfactory.data.Common.titleCase
+import com.suslanium.wordsfactory.data.database.converter.WordConverter
 import com.suslanium.wordsfactory.data.database.dao.DictionaryDao
 import com.suslanium.wordsfactory.data.datasource.TestTimestampDataSource
-import com.suslanium.wordsfactory.domain.entity.training.TestQuestion
 import com.suslanium.wordsfactory.domain.repository.TestRepository
 import java.time.ZoneId
 import java.time.ZonedDateTime
 
 class TestRepositoryImpl(
     private val dictionaryDao: DictionaryDao,
-    private val testTimestampDataSource: TestTimestampDataSource
+    private val testTimestampDataSource: TestTimestampDataSource,
+    private val wordConverter: WordConverter
 ) : TestRepository {
 
     private val stubWords = listOf(
         "Cooking", "Smiling", "Freezing"
     )
 
-    override suspend fun getTestQuestions(): List<TestQuestion> {
-        return dictionaryDao.getTestQuestions().map { question ->
-            val firstIncorrectAnswer = question.firstIncorrectAnswer ?: stubWords.random()
-            val secondIncorrectAnswer =
-                question.secondIncorrectAnswer ?: stubWords.minus(firstIncorrectAnswer).random()
-            TestQuestion(
-                correctAnswerDefinition = question.correctAnswerDefinition, answers = listOf(
-                    question.correctAnswer.titleCase() to true,
-                    firstIncorrectAnswer.titleCase() to false,
-                    secondIncorrectAnswer.titleCase() to false
-                ).shuffled()
-            )
-        }
+    override suspend fun getLeastLearnedWords() =
+        dictionaryDao.getLeastLearntWords().map(wordConverter::mapToWordInfo)
+
+    override suspend fun getRandomWordsExcept(words: List<String>): List<String> {
+        val randomWords = dictionaryDao.getRandomWordsExcept(words.map { it.lowercase() })
+        return if (randomWords.size < 2) stubWords else stubWords + randomWords
     }
 
-    override suspend fun increaseWordCoefficient(word: String) =
-        dictionaryDao.incrementWordCoefficient(word.lowercase())
-
-    override suspend fun decreaseWordCoefficient(word: String) =
-        dictionaryDao.decrementWordCoefficient(word.lowercase())
+    override suspend fun setWordCoefficient(word: String, coefficient: Int) =
+        dictionaryDao.setWordCoefficient(
+            word.lowercase(), coefficient
+        )
 
     override suspend fun setLastTestTimestamp() = testTimestampDataSource.setTimestamp(
         ZonedDateTime.now(

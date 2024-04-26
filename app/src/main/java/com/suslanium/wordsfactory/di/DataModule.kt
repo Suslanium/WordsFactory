@@ -3,6 +3,7 @@ package com.suslanium.wordsfactory.di
 import androidx.room.Room
 import com.suslanium.wordsfactory.data.Constants
 import com.suslanium.wordsfactory.data.database.DictionaryDataBase
+import com.suslanium.wordsfactory.data.database.converter.WordConverter
 import com.suslanium.wordsfactory.data.datasource.TestTimestampDataSource
 import com.suslanium.wordsfactory.data.datasource.WordLocalDataSource
 import com.suslanium.wordsfactory.data.datasource.WordRemoteDataSource
@@ -20,7 +21,7 @@ fun provideDataModule() = module {
     single { get<DictionaryDataBase>().dictionaryDao() }
 
     single {
-        WordLocalDataSource(get())
+        WordLocalDataSource(get(), WordConverter)
     }
 
     single {

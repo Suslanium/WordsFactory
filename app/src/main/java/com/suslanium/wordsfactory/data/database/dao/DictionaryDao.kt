@@ -6,7 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Upsert
-import com.suslanium.wordsfactory.data.database.model.TestQuestion
+import com.suslanium.wordsfactory.data.database.model.WordWithCoefficient
 import com.suslanium.wordsfactory.data.database.model.WordWithEtymologies
 import com.suslanium.wordsfactory.data.database.model.entity.DefinitionEntity
 import com.suslanium.wordsfactory.data.database.model.entity.EtymologyEntity
@@ -46,46 +46,15 @@ interface DictionaryDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertWordCoefficient(wordCoefficient: LearnCoefficient)
 
-    @Query("UPDATE learn_coefficient SET coefficient = coefficient + 1 WHERE word = :word")
-    suspend fun incrementWordCoefficient(word: String)
+    @Query("UPDATE learn_coefficient SET coefficient = :coefficient WHERE word = :word")
+    suspend fun setWordCoefficient(word: String, coefficient: Int)
 
-    @Query("UPDATE learn_coefficient SET coefficient = coefficient - 1 WHERE word = :word")
-    suspend fun decrementWordCoefficient(word: String)
+    @Query("SELECT word FROM words WHERE word NOT IN (:words) ORDER BY RANDOM() LIMIT 10")
+    suspend fun getRandomWordsExcept(words: List<String>): List<String>
 
-    @Query(
-        """
-    SELECT 
-        correctAnswer, 
-        correctAnswerDefinition, 
-        firstIncorrectAnswer, 
-        (SELECT c3.word 
-         FROM learn_coefficient c3 
-         WHERE c3.word <> correctAnswer AND c3.word <> firstIncorrectAnswer 
-         ORDER BY RANDOM() 
-         LIMIT 1) as secondIncorrectAnswer 
-    FROM (
-        SELECT 
-            c.word AS correctAnswer, 
-            (SELECT d.definition 
-             FROM words w 
-             JOIN etymologyentity e ON e.wordOwnerId = w.wordId AND w.word = c.word 
-             JOIN meaningentity m ON m.etymologyOwnerId = e.etymologyId 
-             JOIN definitionentity d ON d.meaningOwnerId = m.meaningId 
-             ORDER BY RANDOM() 
-             LIMIT 1) as correctAnswerDefinition, 
-            (SELECT c2.word 
-             FROM learn_coefficient c2 
-             WHERE c2.word <> c.word 
-             ORDER BY RANDOM() 
-             LIMIT 1) as firstIncorrectAnswer 
-        FROM learn_coefficient c
-        WHERE c.word IN (SELECT w2.word FROM words w2)
-        ORDER BY c.coefficient ASC 
-        LIMIT 10
-    )
-"""
-    )
-    suspend fun getTestQuestions(): List<TestQuestion>
+    @Transaction
+    @Query("SELECT * FROM words w JOIN learn_coefficient lc ON w.word = lc.word ORDER BY (SELECT c.coefficient FROM learn_coefficient c WHERE c.word = w.word) ASC LIMIT 10")
+    suspend fun getLeastLearntWords(): List<WordWithCoefficient>
 
     @Query("SELECT COUNT(*) FROM learn_coefficient c WHERE c.coefficient > 5 AND c.word IN (SELECT w.word FROM words w)")
     fun getLearntWordsCount(): Flow<Int>
