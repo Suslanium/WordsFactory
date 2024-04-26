@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "826963175656",
+    "project_id": "wordsfactory2",
+    "storage_bucket": "wordsfactory2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:826963175656:android:341a4b337eb5a2af8c815d",
+        "android_client_info": {
+          "package_name": "com.suslanium.wordsfactory"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAPF5FWqT6ycO9QDIEVrbdKxKkXykdOO6I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
