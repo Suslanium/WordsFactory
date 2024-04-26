@@ -10,8 +10,6 @@ sealed interface DictionaryState {
 
     data object WordNotFound : DictionaryState
 
-    data object Error : DictionaryState
-
     data class Content(val wordEtymologies: List<WordEtymology>) : DictionaryState
 
 }

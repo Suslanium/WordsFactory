@@ -20,7 +20,7 @@ import com.suslanium.wordsfactory.R
 import com.suslanium.wordsfactory.presentation.state.DictionaryState
 import com.suslanium.wordsfactory.presentation.ui.common.AppTextField
 import com.suslanium.wordsfactory.presentation.ui.common.PrimaryButton
-import com.suslanium.wordsfactory.presentation.ui.screen.dictionary.components.DictionaryErrorPlaceHolder
+import com.suslanium.wordsfactory.presentation.ui.common.TextAlertDialog
 import com.suslanium.wordsfactory.presentation.ui.screen.dictionary.components.DictionaryNoWordPlaceHolder
 import com.suslanium.wordsfactory.presentation.ui.screen.dictionary.components.DictionaryPlaceHolder
 import com.suslanium.wordsfactory.presentation.ui.screen.dictionary.components.DictionaryWord
@@ -37,6 +37,16 @@ fun DictionaryScreen() {
     val query by remember { viewModel.currentQuery }
     val state by remember { viewModel.screenState }
     val isAdded by remember { viewModel.addedToDictionary }
+    val isError by remember { viewModel.isError }
+
+    if (isError) {
+        TextAlertDialog(
+            title = stringResource(id = R.string.error_title),
+            message = stringResource(id = R.string.general_error_message),
+            acceptButtonText = stringResource(id = R.string.ok),
+            onAccept = viewModel::consumeError
+        )
+    }
 
     val focusManager = LocalFocusManager.current
     Column(
@@ -63,7 +73,6 @@ fun DictionaryScreen() {
                     wordEtymologies = dictionaryState.wordEtymologies
                 )
 
-                DictionaryState.Error -> DictionaryErrorPlaceHolder()
                 DictionaryState.Initial -> DictionaryPlaceHolder()
                 DictionaryState.Loading -> LoadingPlaceHolder()
                 DictionaryState.WordNotFound -> DictionaryNoWordPlaceHolder()

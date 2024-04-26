@@ -39,6 +39,10 @@ class DictionaryViewModel(
     val screenState: State<DictionaryState>
         get() = _screenState
 
+    private val _isError = mutableStateOf(false)
+    val isError: State<Boolean>
+        get() = _isError
+
     private val _addedToDictionary = mutableStateOf(false)
     val addedToDictionary: State<Boolean>
         get() = _addedToDictionary
@@ -60,7 +64,8 @@ class DictionaryViewModel(
             _screenState.value = DictionaryState.Content(word.etymologies)
             _addedToDictionary.value = word.isAdded
         }.retryWhen { _, _ ->
-            _screenState.value = DictionaryState.Error
+            _isError.value = true
+            _screenState.value = DictionaryState.Initial
             true
         }.flowOn(Dispatchers.IO).launchIn(viewModelScope)
     }
@@ -87,6 +92,10 @@ class DictionaryViewModel(
             }
             WordsFactoryWidget().updateAll(application)
         }
+    }
+
+    fun consumeError() {
+        _isError.value = false
     }
 
 }
